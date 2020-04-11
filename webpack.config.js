@@ -28,7 +28,6 @@ module.exports = (env = {}) => {
   const config = {
     entry: {
       server: './src/server.ts',
-      workflow: './src/data-workflow/index.ts',
     },
     mode: env.development ? 'development' : 'production',
     target: 'node',
