@@ -1,5 +1,5 @@
-export * from './user';
-export * from './org';
-export * from './token';
-export * from './auth';
-export * from './admin';
+import * as User from './users';
+import * as Memory from './memories';
+import * as Song from './memories';
+
+export { User, Memory, Song };
