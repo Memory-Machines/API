@@ -1,18 +1,13 @@
 import { Router } from 'express';
 
-import { HealthController } from '../controllers';
+import user from './users';
+import song from './songs';
+import memory from './memories';
 
-import UserRouter from './user';
-import AuthRouter from './auth';
-import OrgRouter from './org';
-import FileRouter from './files';
+const router = Router();
 
-const ApiRouter = Router();
+router.use('/users', user);
+router.use('/songs', song);
+router.use('/memories', memory);
 
-ApiRouter.use('/health-status', HealthController.healthStatus);
-ApiRouter.use('/auth', AuthRouter);
-ApiRouter.use('/users', UserRouter);
-ApiRouter.use('/orgs', OrgRouter);
-ApiRouter.use('/files', FileRouter);
-
-export default ApiRouter;
+export default router;
