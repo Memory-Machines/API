@@ -1,16 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { User } from '../services';
-//import { getMaxListeners } from 'cluster';
 
-async function createUserController(req: Request, res: Response, next: NextFunction) {
+async function createUser(req: Request, res: Response, next: NextFunction) {
   try {
-    const { firstName, lastName, type, address, birthday, createdBy, email, password } = req.body;
+    const { firstName, lastName, memberType, address, birthday, createdBy, email, password } = req.body;
 
     const user = await User.createUser({
       firstName,
       lastName,
-      type,
+      memberType,
       address,
       birthday,
       createdBy,
@@ -24,6 +23,6 @@ async function createUserController(req: Request, res: Response, next: NextFunct
   }
 }
 
-export { createUserController };
+export { createUser };
 
 /* */
