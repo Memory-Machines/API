@@ -1,4 +1,4 @@
-import { Songs } from '../repositories';
+import { Song } from '../repositories';
 
 interface Song {
   title: string;
@@ -20,7 +20,7 @@ async function storeSong(data: Song) {
     youTubeLink: data.youTubeLink,
     favorite: data.favorite,
   };
-  const result = await Songs.saveNewSongToDb(song);
+  const result = await Song.saveNewSongToDb(song);
   return result;
 }
 
