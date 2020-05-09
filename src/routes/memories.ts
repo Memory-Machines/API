@@ -4,6 +4,6 @@ import { Memory } from '../controllers';
 
 const router = Router();
 
-router.get('/', Memory.appendMemory);
+router.post('/', Memory.appendMemory);
 
 export default router;

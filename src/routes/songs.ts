@@ -4,6 +4,6 @@ import { Song } from '../controllers';
 
 const router = Router();
 
-router.get('/', Song.storeSong);
+router.post('/', Song.storeSong);
 
 export default router;
