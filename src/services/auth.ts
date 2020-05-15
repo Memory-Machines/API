@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
+import config from 'config';
 
 import { User } from '../services';
 import { mb } from '../types';
+import { getSpotifyToken, getSpotifyCode } from '../utils/spotifyToken';
 
 const saltRounds = 10;
 
@@ -48,4 +50,31 @@ async function login(data: { email: string; password: string }) {
   }
 }
 
-export { registerUser, login };
+async function spotifyAuthTokenRequest(code: string) {
+  try {
+    const data: any = await getSpotifyToken(code);
+    const token: mb.SpotifyAuth = {
+      access_token: data.access_token,
+      token_type: data.token_type,
+      expires_in: data.expires_in,
+      refresh_token: data.refresh_token,
+      scope: data.scope,
+    };
+    return token;
+  } catch (e) {
+    console.error('authService::spotifyAuthTokenRequest', e);
+    throw e;
+  }
+}
+
+async function spotifyAuthCodeRequest() {
+  try {
+    const data = await getSpotifyCode();
+    return data;
+  } catch (e) {
+    console.error('authService::spotifyAuthCodeRequest', e);
+    throw e;
+  }
+}
+
+export { registerUser, login, spotifyAuthTokenRequest, spotifyAuthCodeRequest };

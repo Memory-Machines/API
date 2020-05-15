@@ -1,4 +1,5 @@
 import axios from 'axios';
+import querystring from 'querystring';
 
 import { mb } from '../types';
 import { AxiosResponse } from '../axiosTypes';
@@ -30,10 +31,10 @@ async function getSpotifyCode() {
   //make axios request to
   try {
     const { scope, client_id, state, redirect_uri, response_type } = spotify_cred;
-    const data = await axios.get(
+    const codeUrl = await axios.get(
       `https://accounts.spotify.com/authorize?client_id=${client_id}&response_type=${response_type.code}&redirec_uri=${redirect_uri}&scope=${scope}&state=${state}`
     );
-    return data;
+    return codeUrl;
   } catch (e) {
     console.log('UtilsSpotifyToken::getSpotifyCode', e);
     throw e;
@@ -41,16 +42,23 @@ async function getSpotifyCode() {
 }
 
 async function getSpotifyToken(code: string) {
-  const { client_secret, client_id, grant_type, redirect_uri, Authorization } = spotify_cred;
-  console.log({ grant_type });
-  const data = { client_secret, client_id, grant_type, redirect_uri };
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: Authorization,
-  };
-
-  const res = await axios.post('https://accounts.spotify.com/api/token', data, { headers });
-  return res;
+  try {
+    const { client_secret, client_id, grant_type, redirect_uri } = spotify_cred;
+    console.log({ grant_type });
+    const body = { client_secret, client_id, grant_type, redirect_uri, code };
+    const headers = {
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded',
+    };
+    console.log(JSON.stringify(body, null, 2));
+    const { data } = await axios.post('https://accounts.spotify.com/api/token', querystring.stringify(body), {
+      headers,
+    });
+    return data;
+  } catch (e) {
+    console.log(e.response.data);
+    throw e;
+  }
 }
 
 // async function getUserEmail(token: object) {

@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
+import config from 'config';
 
 const connectDb = () => {
-  return mongoose.connect(process.env.MONGO_ATLAS_CONNECTION, {
+  return mongoose.connect(config.get('server.dbUri'), {
     useNewUrlParser: true,
     dbName: 'dev',
     keepAlive: true,
