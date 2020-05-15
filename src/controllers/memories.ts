@@ -15,7 +15,7 @@ async function appendMemory(req: Request, res: Response, next: NextFunction) {
     });
     res.send(memory);
   } catch (e) {
-    console.error('appendMemory::memory contorller', e);
+    console.error('appendMemory::memory controller', e);
     res.status(500).send(e.message);
   }
 }
