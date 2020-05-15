@@ -1,23 +1,21 @@
 import { Memory } from '../repositories';
+import { mb } from '../types';
 
-interface Memory {
-  user: string;
-  song: string;
-  text: string;
-  tags: Array<string>;
-  createdBy: string;
-}
-
-async function createMemory(data: Memory) {
-  const memory = {
-    user: data.user,
-    song: data.song,
-    text: data.text,
-    tags: data.tags,
-    createdBy: data.createdBy,
-  };
-  const result = await Memory.saveNewMemoryToDb(memory);
-  return result;
+async function createMemory(data: mb.Memory): Promise<mb.Memory.MemoryDoc> {
+  try {
+    // const memory = {
+    //   user: data.user,
+    //   song: data.song,
+    //   text: data.text,
+    //   tags: data.tags,
+    //   createdBy: data.createdBy,
+    // };
+    const result = await Memory.saveNewMemoryToDb(data);
+    return result;
+  } catch (e) {
+    console.error('memoryService::createMemory', e);
+    throw e;
+  }
 }
 
 export { createMemory };
