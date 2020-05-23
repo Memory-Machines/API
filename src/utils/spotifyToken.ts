@@ -50,7 +50,6 @@ async function getSpotifyToken(code: string) {
       Accept: 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     };
-    console.log(JSON.stringify(body, null, 2));
     const { data } = await axios.post('https://accounts.spotify.com/api/token', querystring.stringify(body), {
       headers,
     });
